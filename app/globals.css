@@ -1,0 +1,464 @@
+
+@import "tailwindcss";
+
+/* ========================================
+   NEXUS — BENTO DARK DESIGN SYSTEM
+   ======================================== */
+
+:root {
+  --background: #09090d;
+  --foreground: #f4f4f5;
+  --surface: #121218;
+  --surface-hover: #191923;
+  --violet: #a78bfa;
+  --cyan: #5eead4;
+  --muted: #71717a;
+  --border: rgba(255, 255, 255, 0.08);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 24px;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  color: white;
+  background: rgba(139, 92, 246, 0.4);
+}
+
+/* ========================================
+   BACKGROUND ATMOSPHERE
+   ======================================== */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image:
+    linear-gradient(
+      rgba(167, 139, 250, 0.045) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(167, 139, 250, 0.045) 1px,
+      transparent 1px
+    );
+  background-size: 52px 52px;
+  animation: nexus-grid 30s linear infinite;
+  mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    rgba(0, 0, 0, 0.6) 45%,
+    transparent 90%
+  );
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  width: 380px;
+  height: 380px;
+  right: -180px;
+  top: 10%;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 50%;
+  background: rgba(124, 58, 237, 0.12);
+  filter: blur(120px);
+  animation: nexus-ambient 14s ease-in-out infinite alternate;
+}
+
+/* ========================================
+   ANIMATION KEYFRAMES
+   ======================================== */
+
+@keyframes nexus-grid {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 52px 52px;
+  }
+}
+
+@keyframes nexus-ambient {
+  from {
+    transform: translate3d(0, -20px, 0) scale(0.9);
+  }
+
+  to {
+    transform: translate3d(-70px, 100px, 0) scale(1.15);
+  }
+}
+
+@keyframes nexus-enter {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes nexus-float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes nexus-gradient {
+  0% {
+    background-position: 0% center;
+  }
+
+  100% {
+    background-position: 300% center;
+  }
+}
+
+@keyframes nexus-shimmer {
+  0%,
+  70%,
+  100% {
+    transform: translateX(-120%);
+  }
+
+  85% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes nexus-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(94, 234, 212, 0.35);
+  }
+
+  50% {
+    opacity: 0.45;
+    box-shadow: 0 0 2px transparent;
+  }
+}
+
+@keyframes nexus-task-in {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes nexus-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========================================
+   NEXUS MAIN CONTAINER
+   ======================================== */
+
+.nexus {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  background: transparent;
+}
+
+.nexus h1,
+.nexus h2,
+.nexus h3,
+.nexus .display-font {
+  font-family: "Space Grotesk", Arial, sans-serif;
+  letter-spacing: -0.035em;
+}
+
+/* ========================================
+   ENTRANCE ANIMATIONS
+   ======================================== */
+
+.nexus-entrance {
+  opacity: 0;
+  animation: nexus-enter 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)
+    forwards;
+  will-change: opacity, transform;
+}
+
+/* ========================================
+   BENTO CARDS
+   ======================================== */
+
+.nexus-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-color: var(--border);
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.nexus-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(167, 139, 250, 0.35);
+  box-shadow:
+    0 15px 45px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(139, 92, 246, 0.06);
+}
+
+/* Soft mouse-light effect */
+.nexus-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(167, 139, 250, 0.07),
+    transparent 55%
+  );
+  transition: opacity 0.3s ease;
+}
+
+.nexus-card:hover::before {
+  opacity: 1;
+}
+
+/* Animated light sweep */
+.nexus-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  transform: translateX(-120%);
+  background: linear-gradient(
+    110deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.045) 50%,
+    transparent 75%
+  );
+  animation: nexus-shimmer 7s ease-in-out infinite;
+}
+
+/* ========================================
+   ANIMATED GRADIENT TEXT
+   ======================================== */
+
+.nexus-gradient {
+  background: linear-gradient(
+    100deg,
+    #c4b5fd,
+    #818cf8,
+    #5eead4,
+    #c4b5fd
+  );
+  background-size: 300% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: nexus-gradient 7s linear infinite;
+}
+
+/* ========================================
+   PROGRESS BAR
+   ======================================== */
+
+.nexus-progress {
+  transition: width 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* ========================================
+   TASK ANIMATIONS
+   ======================================== */
+
+.nexus-task {
+  animation: nexus-task-in 0.35s ease both;
+}
+
+.nexus-task button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ========================================
+   LIVE STATUS INDICATOR
+   ======================================== */
+
+.nexus-dot {
+  animation: nexus-pulse 2s ease-in-out infinite;
+}
+
+/* ========================================
+   BUTTONS AND LINKS
+   ======================================== */
+
+.nexus-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.nexus-button:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(139, 92, 246, 0.12);
+}
+
+.nexus-button:active {
+  transform: scale(0.97);
+}
+
+.nexus a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nexus button {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nexus button:focus-visible,
+.nexus a:focus-visible,
+.nexus input:focus-visible {
+  outline: 2px solid var(--violet);
+  outline-offset: 4px;
+}
+
+/* ========================================
+   INPUT FIELDS
+   ======================================== */
+
+.nexus input {
+  color: var(--foreground);
+  caret-color: var(--violet);
+}
+
+.nexus input::placeholder {
+  color: #62626f;
+}
+
+.nexus input:focus {
+  border-color: rgba(167, 139, 250, 0.5);
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.08);
+}
+
+/* ========================================
+   TIMER TYPOGRAPHY
+   ======================================== */
+
+.nexus .tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ========================================
+   CUSTOM SCROLLBAR
+   ======================================== */
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #393044 #09090d;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #09090d;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #393044;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8b5cf6;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 640px) {
+  body::before {
+    background-size: 36px 36px;
+  }
+
+  .nexus-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .nexus-entrance {
+    animation-duration: 0.6s;
+  }
+}
+
+/* ========================================
+   REDUCED MOTION ACCESSIBILITY
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .nexus-entrance {
+    opacity: 1;
+    transform: none;
+  }
+}
